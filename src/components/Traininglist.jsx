@@ -5,9 +5,6 @@ import "ag-grid-community/styles/ag-theme-material.css";
 import dayjs from "dayjs";
 import Container from "@mui/material/Container";
 
-
-
-
 function TrainingList() {
   const [training, setTraining] = useState([]);
 
@@ -49,7 +46,9 @@ function TrainingList() {
       .then((data) => {
         const trainingWithCustomerDetails = data.content.map(
           async (training) => {
-            const customerLink = training.links.find((link) => link.rel === "customer").href;
+            const customerLink = training.links.find(
+              (link) => link.rel === "customer"
+            ).href;
             const customerResponse = await fetch(customerLink);
             const customerData = await customerResponse.json();
             return { ...training, customer: customerData };
@@ -65,14 +64,17 @@ function TrainingList() {
   return (
     <>
       <Container maxWidth="xl">
-        <div className="ag-theme-material" style={{ width: "100%", height: 600 }}>
-        <AgGridReact
-          rowData={training}
-          columnDefs={columnDefs}
-          pagination={true}
-          paginationAutoPageSize={true}
-        />
-      </div>
+        <div
+          className="ag-theme-material"
+          style={{ width: "100%", height: 600 }}
+        >
+          <AgGridReact
+            rowData={training}
+            columnDefs={columnDefs}
+            pagination={true}
+            paginationAutoPageSize={true}
+          />
+        </div>
       </Container>
     </>
   );

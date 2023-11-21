@@ -4,49 +4,51 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import Container from "@mui/material/Container";
 
-
 function CustomerList() {
-    const [customers, setCustomers] = useState([])
+  const [customers, setCustomers] = useState([]);
 
-    const [columnDefs] = useState([
-        {field: "firstname", sortable: true, filter: true},
-        {field: "lastname", sortable: true, filter: true},
-        {field: "streetaddress", sortable: true, filter: true},
-        {field: "postcode", sortable: true, filter: true},
-        {field: "city", sortable: true, filter: true},
-        {field: "email", sortable: true, filter: true},
-        {field: "phone", sortable: true, filter: true},
-    ]);
-    useEffect(() => {
-        fetchCustomers();
-      }, []);
+  const [columnDefs] = useState([
+    { field: "firstname", sortable: true, filter: true },
+    { field: "lastname", sortable: true, filter: true },
+    { field: "streetaddress", sortable: true, filter: true },
+    { field: "postcode", sortable: true, filter: true },
+    { field: "city", sortable: true, filter: true },
+    { field: "email", sortable: true, filter: true },
+    { field: "phone", sortable: true, filter: true },
+  ]);
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
 
-    const fetchCustomers = () => {
-        fetch("https://traineeapp.azurewebsites.net/api/customers")
-         .then((response) => {
-            if(!response.ok)
-                throw new Error("Something went wrong: " + response.statusText);
+  const fetchCustomers = () => {
+    fetch("https://traineeapp.azurewebsites.net/api/customers")
+      .then((response) => {
+        if (!response.ok)
+          throw new Error("Something went wrong: " + response.statusText);
 
-            return response.json();
-         })
-         .then((data) => setCustomers(data.content))
-         .catch((err) => console.error(err));
-    }
+        return response.json();
+      })
+      .then((data) => setCustomers(data.content))
+      .catch((err) => console.error(err));
+  };
 
-    return (
-      <>
+  return (
+    <>
       <Container maxWidth="xl">
-        <div className = "ag-theme-material" style = {{width: "100%", height: 600}}>
-        <AgGridReact 
-            rowData= {customers}
-            columnDefs= {columnDefs}
+        <div
+          className="ag-theme-material"
+          style={{ width: "100%", height: 600 }}
+        >
+          <AgGridReact
+            rowData={customers}
+            columnDefs={columnDefs}
             pagination={true}
             paginationAutoPageSize={true}
-        />
-      </div>
+          />
+        </div>
       </Container>
-      </>
-    )
-  }
-  
-  export default CustomerList
+    </>
+  );
+}
+
+export default CustomerList;
